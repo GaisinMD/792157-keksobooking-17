@@ -93,8 +93,8 @@ window.utils = (function () {
     // сообщение об ошибке закрузки
     onErrorMessage: function (code) {
       var popup = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
-      var inner = popup.querySelector('.error__inner');
-      var header = inner.querySelector('.error__title');
+      var inner = popup.querySelector('.error__button');
+      var header = popup.querySelector('.error__message');
 
       var hidePopup = function (element) {
         window.constants.mainTag.removeChild(element);

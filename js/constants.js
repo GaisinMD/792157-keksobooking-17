@@ -6,6 +6,9 @@
 window.constants = (function () {
 
   return {
+    mainTag: document.querySelector('main'),
+    pinList: document.querySelector('.map__pins'),
+
   };
 
 })();
