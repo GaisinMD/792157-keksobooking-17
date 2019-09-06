@@ -9,7 +9,7 @@ window.flatList = (function () {
 
   var generatePin = function (template, pinItem) {
     var imgTemplate = template.querySelector('img');
-    template.style = 'left: ' + pinItem.location.x + 'px; top: ' + pinItem.location.y + 'px;';
+    template.style = 'left: ' + (pinItem.location.x - window.constants.PIN_SIZES.width / 2) + 'px; top: ' + (pinItem.location.y - window.constants.PIN_SIZES.height) + 'px;';
     imgTemplate.src = pinItem.author.avatar;
     imgTemplate.alt = pinItem.offer.title;
     return template;
@@ -17,8 +17,6 @@ window.flatList = (function () {
 
   return {
     generateFlatList: function (response) {
-
-      // window.utils.removeChildren(window.constants.pictureList, window.constants.pictureList.getElementsByClassName('picture'));
 
       response.forEach(function (elem) {
         fragment.appendChild(generatePin(pinTemplate.cloneNode(true), elem));
