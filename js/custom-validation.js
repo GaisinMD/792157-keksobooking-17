@@ -5,17 +5,17 @@
 
 window.customValidation = (function () {
 
-  /*var removeSetCustomValidity = function (evt) {
+  /* var removeSetCustomValidity = function (evt) {
     evt.target.setCustomValidity('');
     window.customValidation.HASHTAGS.style = 'border-color: #9a9a9a; background-color: white';
   };*/
 
   return {
 
-    //HASHTAGS: document.querySelector('.text__hashtags'),
+    // HASHTAGS: document.querySelector('.text__hashtags'),
 
-    validate: function (string) {
-      /*var hashtags = string.value.trim();
+    validate: function () {
+      /* var hashtags = string.value.trim();
       var inputCustomValidation;
       var customValidityMessage;
 
@@ -40,7 +40,6 @@ window.customValidation = (function () {
           return false;
         }
       }*/
-      console.log('validate');
 
       return true;
 

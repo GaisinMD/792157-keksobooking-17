@@ -6,6 +6,17 @@
 (function () {
   var URL = 'https://js.dump.academy/keksobooking/data';
   var MAIN_PIN = document.querySelector('.map__pin--main');
+  var houseTypeMinPrices = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000,
+  };
+  var type = document.querySelector('#type');
+  var price = document.querySelector('#price');
+  var timeIn = document.querySelector('#timein');
+  var timeOut = document.querySelector('#timeout');
+
 
   var setCoordinate = function () {
     var mainPinCoordinates = MAIN_PIN.getBoundingClientRect();
@@ -29,21 +40,31 @@
     MAIN_PIN.removeEventListener('click', activateMain);
   };
 
+  var setMinPrice = function () {
+    price.setAttribute('placeholder', houseTypeMinPrices[type.value]);
+    price.setAttribute('min', houseTypeMinPrices[type.value]);
+  };
+
   setCoordinate();
   MAIN_PIN.addEventListener('click', activateMain);
   MAIN_PIN.addEventListener('mouseup', setCoordinate);
+  type.addEventListener('change', setMinPrice);
+  timeIn.addEventListener('change', function () {
+    timeOut.value = timeIn.value;
+  });
+  timeOut.addEventListener('change', function () {
+    timeIn.value = timeOut.value;
+  });
 
-  window.constants.adForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
+  window.constants.adForm.addEventListener('submit', function () {
+    // evt.preventDefault();
 
     if (window.customValidation.validate()) {
-      console.log('true');
-      /*window.customValidation.HASHTAGS.setCustomValidity('');
+      /* window.customValidation.HASHTAGS.setCustomValidity('');
       window.backend.save(window.constants.URL_SEND, new FormData(PHOTO_EDIT_FORM), window.utils.onSuccessMessage, window.utils.onErrorMessage);
       hidePhotoEditForm(window.constants.photoPreviewOverlay);*/
     } else {
-      console.log('false');
-      /*window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
+      /* window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
     }
 
   });
