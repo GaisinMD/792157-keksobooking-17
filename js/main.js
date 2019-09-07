@@ -1,5 +1,5 @@
 // Выполняемые задачи: запуск логики
-// Зависимости:
+// Зависимости: constants.js
 
 'use strict';
 
@@ -32,5 +32,20 @@
   setCoordinate();
   MAIN_PIN.addEventListener('click', activateMain);
   MAIN_PIN.addEventListener('mouseup', setCoordinate);
+
+  window.constants.adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    if (window.customValidation.validate()) {
+      console.log('true');
+      /*window.customValidation.HASHTAGS.setCustomValidity('');
+      window.backend.save(window.constants.URL_SEND, new FormData(PHOTO_EDIT_FORM), window.utils.onSuccessMessage, window.utils.onErrorMessage);
+      hidePhotoEditForm(window.constants.photoPreviewOverlay);*/
+    } else {
+      console.log('false');
+      /*window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
+    }
+
+  });
 
 })();
