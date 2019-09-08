@@ -44,11 +44,11 @@
     for (var i = 0; i < window.constants.adFormFields.length; i++) {
       window.constants.adFormFields[i].removeAttribute('disabled');
     }
+    MAIN_PIN.removeEventListener('mousedown', activateMain);
+    console.log('xxx');
   };
 
   var getEffectValue = function (coordinateX, coordinateY) {
-    activateMain();
-    console.log(coordinateX, coordinateY);
     if (coordinateX >= MIN_X && coordinateX <= MAX_X) {
       if (coordinateY >= MIN_Y && coordinateY <= MAX_Y) {
         setCoordinate(coordinateX, coordinateY);
@@ -62,9 +62,8 @@
   };
 
   setCoordinate(START_X, START_Y);
-  // MAIN_PIN.addEventListener('click', activateMain);
-  // MAIN_PIN.addEventListener('mouseup', setCoordinate);
-  window.utils.setSlider(MAIN_PIN, window.constants.mapPins, getEffectValue);
+  MAIN_PIN.addEventListener('mousedown', activateMain);
+  window.utils.setSlider(MAIN_PIN, getEffectValue);
   type.addEventListener('change', setMinPrice);
   timeIn.addEventListener('change', function () {
     timeOut.value = timeIn.value;

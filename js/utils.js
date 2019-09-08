@@ -63,7 +63,7 @@ window.utils = (function () {
     },
 
     // слайдер
-    setSlider: function (pin, area, callback) {
+    setSlider: function (pin, callback) {
       pin.addEventListener('mousedown', function (evt) {
         evt.preventDefault();
         var startCoordsX = evt.clientX;
@@ -72,8 +72,6 @@ window.utils = (function () {
         var onMouseMove = function (moveEvt) {
           moveEvt.preventDefault();
 
-          // var areaWidth = area.clientWidth;
-          // var areaHeight = area.clientHeight;
           var shiftX = startCoordsX - moveEvt.clientX;
           var shiftY = startCoordsY - moveEvt.clientY;
 
