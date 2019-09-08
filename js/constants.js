@@ -14,6 +14,7 @@ window.constants = (function () {
       width: 65,
       height: 70
     },
+    mainPin: document.querySelector('.map__pin--main'),
     mainTag: document.querySelector('main'),
     map: document.querySelector('.map'),
     mapPins: document.querySelector('.map__pins'),
