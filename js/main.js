@@ -4,10 +4,12 @@
 'use strict';
 
 (function () {
-  var MIN_PERCENT_X = -2;
-  var MIN_PERCENT_Y = 15;
-  var MAX_PERCENT_X = 97;
-  var MAX_PERCENT_Y = 89;
+  var MIN_X = -33;
+  var MIN_Y = 130;
+  var MAX_X = window.constants.mapPins.clientWidth - 33;
+  var MAX_Y = 630;
+  var START_X = 570;
+  var START_Y = 375;
   var URL = 'https://js.dump.academy/keksobooking/data';
   var MAIN_PIN = document.querySelector('.map__pin--main');
   var houseTypeMinPrices = {
@@ -26,11 +28,8 @@
     var mainPinCoordinates = MAIN_PIN.getBoundingClientRect();
     var mainPinCoordinatesX = mainPinCoordinates.x - window.constants.mapCoordinates.x;
     var mainPinCoordinatesY = mainPinCoordinates.y - window.constants.mapCoordinates.y;
-    window.constants.adFormFieldAddress.value =
-    '' + Math.round(mainPinCoordinatesX + window.constants.MAIN_PIN_SIZES.width / 2) +
-    ', ' + Math.round(mainPinCoordinatesY + window.constants.MAIN_PIN_SIZES.height);
-    console.log(coordinateX, coordinateY);
-    MAIN_PIN.style = 'left:' + coordinateX + '%; top:' + coordinateY + '%';
+    window.constants.adFormFieldAddress.value = '' + Math.round(mainPinCoordinatesX + window.constants.MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + window.constants.MAIN_PIN_SIZES.height);
+    MAIN_PIN.style = 'left:' + coordinateX + 'px; top:' + coordinateY + 'px';
   };
 
   var activateMain = function () {
@@ -47,11 +46,12 @@
     }
   };
 
-  var getEffectValue = function (percentX, percentY) {
+  var getEffectValue = function (coordinateX, coordinateY) {
     activateMain();
-    if (percentX >= MIN_PERCENT_X && percentX <= MAX_PERCENT_X) {
-      if (percentY >= MIN_PERCENT_Y && percentY <= MAX_PERCENT_Y) {
-        setCoordinate(percentX, percentY);
+    console.log(coordinateX, coordinateY);
+    if (coordinateX >= MIN_X && coordinateX <= MAX_X) {
+      if (coordinateY >= MIN_Y && coordinateY <= MAX_Y) {
+        setCoordinate(coordinateX, coordinateY);
       }
     }
   };
@@ -61,7 +61,7 @@
     price.setAttribute('min', houseTypeMinPrices[type.value]);
   };
 
-  setCoordinate(50, 50);
+  setCoordinate(START_X, START_Y);
   // MAIN_PIN.addEventListener('click', activateMain);
   // MAIN_PIN.addEventListener('mouseup', setCoordinate);
   window.utils.setSlider(MAIN_PIN, window.constants.mapPins, getEffectValue);

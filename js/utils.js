@@ -72,14 +72,14 @@ window.utils = (function () {
         var onMouseMove = function (moveEvt) {
           moveEvt.preventDefault();
 
-          var areaWidth = area.clientWidth;
-          var areaHeight = area.clientHeight;
+          // var areaWidth = area.clientWidth;
+          // var areaHeight = area.clientHeight;
           var shiftX = startCoordsX - moveEvt.clientX;
           var shiftY = startCoordsY - moveEvt.clientY;
 
           startCoordsX = moveEvt.clientX;
           startCoordsY = moveEvt.clientY;
-          callback((pin.offsetLeft - shiftX) * 100 / areaWidth, (pin.offsetTop - shiftY) * 100 / areaHeight);
+          callback((pin.offsetLeft - shiftX), (pin.offsetTop - shiftY));
         };
 
         var onMouseUp = function (upEvt) {
