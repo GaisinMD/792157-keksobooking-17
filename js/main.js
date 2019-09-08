@@ -45,7 +45,6 @@
       window.constants.adFormFields[i].removeAttribute('disabled');
     }
     MAIN_PIN.removeEventListener('mousedown', activateMain);
-    console.log('xxx');
   };
 
   var getEffectValue = function (coordinateX, coordinateY) {
