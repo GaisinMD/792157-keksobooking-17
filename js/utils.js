@@ -63,19 +63,23 @@ window.utils = (function () {
     },
 
     // слайдер
-    setSlider: function (pin, track, callback) {
+    setSlider: function (pin, area, callback) {
       pin.addEventListener('mousedown', function (evt) {
         evt.preventDefault();
-        var startCoords = evt.clientX;
+        var startCoordsX = evt.clientX;
+        var startCoordsY = evt.clientY;
 
         var onMouseMove = function (moveEvt) {
           moveEvt.preventDefault();
 
-          var lineWidth = track.clientWidth;
-          var shift = startCoords - moveEvt.clientX;
+          var areaWidth = area.clientWidth;
+          var areaHeight = area.clientHeight;
+          var shiftX = startCoordsX - moveEvt.clientX;
+          var shiftY = startCoordsY - moveEvt.clientY;
 
-          startCoords = moveEvt.clientX;
-          callback((pin.offsetLeft - shift) * 100 / lineWidth);
+          startCoordsX = moveEvt.clientX;
+          startCoordsY = moveEvt.clientY;
+          callback((pin.offsetLeft - shiftX) * 100 / areaWidth, (pin.offsetTop - shiftY) * 100 / areaHeight);
         };
 
         var onMouseUp = function (upEvt) {
