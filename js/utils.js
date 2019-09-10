@@ -38,8 +38,8 @@ window.utils = (function () {
 
     // очистка DOM узла
     removeChildren: function (parent, children) {
-      while (children[0]) {
-        parent.removeChild(children[0]);
+      for (var i = 0; i < children.length; i++) {
+        parent.removeChild(children[i]);
       }
     },
 

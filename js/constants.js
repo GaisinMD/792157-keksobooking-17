@@ -14,6 +14,9 @@ window.constants = (function () {
       width: 65,
       height: 70
     },
+    PIN_LIST: [],
+    LOAD_URL: 'https://js.dump.academy/keksobooking/data',
+
     mainPin: document.querySelector('.map__pin--main'),
     mainTag: document.querySelector('main'),
     map: document.querySelector('.map'),

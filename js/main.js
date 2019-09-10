@@ -10,16 +10,15 @@
   var MAX_Y = 630;
   var START_X = 570;
   var START_Y = 375;
-  var URL = 'https://js.dump.academy/keksobooking/data';
 
-  var setPin = function (coordinateX, coordinateY) {
-    window.announcementForm.setAddress();
-    window.constants.mainPin.style = 'left:' + coordinateX + 'px; top:' + coordinateY + 'px';
+  var createPinList = function (response) {
+    window.constants.PIN_LIST = response;
+    window.flatList.generateFlatList(window.constants.PIN_LIST);
   };
 
   var activateMain = function () {
     if (window.constants.map.classList.contains('map--faded')) {
-      window.backend.load(URL, window.flatList.generateFlatList, window.utils.onErrorMessage);
+      window.backend.load(window.constants.LOAD_URL, createPinList, window.utils.onErrorMessage);
       window.constants.map.classList.remove('map--faded');
     }
     if (window.constants.adForm.classList.contains('ad-form--disabled')) {
@@ -30,6 +29,11 @@
       window.constants.adFormFields[i].removeAttribute('disabled');
     }
     window.constants.mainPin.removeEventListener('mousedown', activateMain);
+  };
+
+  var setPin = function (coordinateX, coordinateY) {
+    window.announcementForm.setAddress();
+    window.constants.mainPin.style = 'left:' + coordinateX + 'px; top:' + coordinateY + 'px';
   };
 
   var getEffectValue = function (coordinateX, coordinateY) {
