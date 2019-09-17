@@ -21,6 +21,7 @@ window.constants = (function () {
     mainTag: document.querySelector('main'),
     map: document.querySelector('.map'),
     mapPins: document.querySelector('.map__pins'),
+    mapFilter: document.querySelector('.map__filters-container'),
     mapCoordinates: document.querySelector('.map').getBoundingClientRect(),
     adForm: document.querySelector('.ad-form'),
     adFormHeader: document.querySelector('.ad-form-header'),
