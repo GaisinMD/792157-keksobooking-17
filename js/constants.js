@@ -6,6 +6,7 @@
 window.constants = (function () {
 
   return {
+    ESC_KEYCODE: 27,
     PIN_SIZES: {
       width: 50,
       height: 70

@@ -68,6 +68,18 @@ window.flatList = (function () {
     CARD.photos.appendChild(fragment);
   };
 
+  var hideCard = function () {
+    window.utils.hideElement(cardTemplate);
+    CARD.close.removeEventListener('click', hideCard);
+    document.removeEventListener('keydown', onCardPressEsc);
+  };
+
+  var onCardPressEsc = function (evt) {
+    if (evt.keyCode === window.constants.ESC_KEYCODE) {
+      hideCard();
+    }
+  };
+
   var generateCard = function (item) {
     CARD.title.textContent = item.offer.title;
     CARD.address.textContent = item.offer.address;
@@ -79,9 +91,8 @@ window.flatList = (function () {
     CARD.description.textContent = item.offer.description;
     generateFlatPhotos(item.offer.photos);
     CARD.avatar.src = item.author.avatar;
-    CARD.close.addEventListener('click', function () {
-      window.utils.hideElement(cardTemplate);
-    });
+    CARD.close.addEventListener('click', hideCard);
+    document.addEventListener('keydown', onCardPressEsc);
 
     window.constants.mapFilter.before(fragment.appendChild(cardTemplate));
     window.utils.showElement(cardTemplate);
