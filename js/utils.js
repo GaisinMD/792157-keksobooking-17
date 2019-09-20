@@ -116,50 +116,35 @@ window.utils = (function () {
 
       document.addEventListener('keydown', onEscPress);
 
-      popup.addEventListener('click', function (evt) {
-        if (evt.target === popup) {
-          hidePopup(popup);
-        }
-      });
-
       header.textContent = header.textContent + ': ' + code;
       window.constants.mainTag.appendChild(popup);
     },
 
     // сообщение об успехе закрузки
     onSuccessMessage: function (code) {
-      var popup = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
-      var inner = popup.querySelector('.success__inner');
-      var button = inner.querySelector('.success__button');
-      var header = inner.querySelector('.success__title');
+      if (code) {
+        var popup = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 
-      var hidePopup = function (element) {
-        window.constants.mainTag.removeChild(element);
-        document.removeEventListener('keydown', onEscPress);
-      };
+        var hidePopup = function (element) {
+          window.constants.mainTag.removeChild(element);
+          document.removeEventListener('keydown', onEscPress);
+        };
 
-      var onEscPress = function (evt) {
-        if (evt.keyCode === window.constants.ESC_KEYCODE) {
+        var onEscPress = function (evt) {
+          if (evt.keyCode === window.constants.ESC_KEYCODE) {
+            hidePopup(popup);
+          }
+        };
+
+        document.addEventListener('keydown', onEscPress);
+
+        popup.addEventListener('click', function () {
           hidePopup(popup);
-        }
-      };
+        });
 
-      button.addEventListener('click', function (evt) {
-        evt.preventDefault();
-        hidePopup(popup);
-      });
-
-      document.addEventListener('keydown', onEscPress);
-
-      popup.addEventListener('click', function (evt) {
-        if (evt.target === popup) {
-          hidePopup(popup);
-        }
-      });
-
-      header.textContent = header.textContent + ': ' + code.filename.filename;
-      window.constants.mainTag.appendChild(popup);
-    }
+        window.constants.mainTag.appendChild(popup);
+      }
+    },
 
   };
 

@@ -17,6 +17,7 @@ window.constants = (function () {
     },
     PIN_LIST: [],
     LOAD_URL: 'https://js.dump.academy/keksobooking/data',
+    SAVE_URL: 'https://js.dump.academy/keksobooking',
 
     mainPin: document.querySelector('.map__pin--main'),
     mainTag: document.querySelector('main'),
