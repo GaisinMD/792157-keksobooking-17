@@ -6,6 +6,7 @@
 window.constants = (function () {
 
   return {
+    CODE_SUCCESS: 200,
     ESC_KEYCODE: 27,
     PIN_SIZES: {
       width: 50,

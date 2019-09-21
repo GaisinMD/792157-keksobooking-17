@@ -3,7 +3,7 @@
 
 'use strict';
 
-(function () {
+window.main = (function () {
   var MIN_X = -33;
   var MIN_Y = 130;
   var MAX_X = window.constants.mapPins.clientWidth - 33;
@@ -31,8 +31,15 @@
     window.constants.mainPin.removeEventListener('mousedown', activateMain);
   };
 
+  var setAddress = function () {
+    var mainPinCoordinates = window.constants.mainPin.getBoundingClientRect();
+    var mainPinCoordinatesX = mainPinCoordinates.x - window.constants.mapCoordinates.x;
+    var mainPinCoordinatesY = mainPinCoordinates.y - window.constants.mapCoordinates.y;
+    window.constants.adFormFieldAddress.value = '' + Math.round(mainPinCoordinatesX + window.constants.MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + window.constants.MAIN_PIN_SIZES.height);
+  };
+
   var setPin = function (coordinateX, coordinateY) {
-    window.announcementForm.setAddress();
+    setAddress();
     window.constants.mainPin.style = 'left:' + coordinateX + 'px; top:' + coordinateY + 'px';
   };
 
@@ -44,8 +51,16 @@
     }
   };
 
-  setPin(START_X, START_Y);
-  window.constants.mainPin.addEventListener('mousedown', activateMain);
-  window.utils.setSlider(window.constants.mainPin, getEffectValue);
+  var inicializingMain = function () {
+    setPin(START_X, START_Y);
+    window.constants.mainPin.addEventListener('mousedown', activateMain);
+    window.utils.setSlider(window.constants.mainPin, getEffectValue);
+  };
+
+  inicializingMain();
+
+  return {
+    inicializingMain: inicializingMain,
+  };
 
 })();

@@ -120,32 +120,6 @@ window.utils = (function () {
       window.constants.mainTag.appendChild(popup);
     },
 
-    // сообщение об успехе закрузки
-    onSuccessMessage: function (code) {
-      if (code) {
-        var popup = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
-
-        var hidePopup = function (element) {
-          window.constants.mainTag.removeChild(element);
-          document.removeEventListener('keydown', onEscPress);
-        };
-
-        var onEscPress = function (evt) {
-          if (evt.keyCode === window.constants.ESC_KEYCODE) {
-            hidePopup(popup);
-          }
-        };
-
-        document.addEventListener('keydown', onEscPress);
-
-        popup.addEventListener('click', function () {
-          hidePopup(popup);
-        });
-
-        window.constants.mainTag.appendChild(popup);
-      }
-    },
-
   };
 
 })();

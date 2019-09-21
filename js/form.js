@@ -18,8 +18,6 @@ window.announcementForm = (function () {
     'palace': 10000,
   };
 
-  var AD_FORM = document.querySelector('.ad-form');
-  var address = document.querySelector('#address');
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var type = document.querySelector('#type');
@@ -27,16 +25,53 @@ window.announcementForm = (function () {
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
 
+  var deActivateMain = function () {
+    if (!window.constants.map.classList.contains('map--faded')) {
+      window.constants.map.classList.add('map--faded');
+    }
+    if (!window.constants.adForm.classList.contains('ad-form--disabled')) {
+      window.constants.adForm.classList.add('ad-form--disabled');
+    }
+    window.constants.adFormHeader.setAttribute('disabled', 'disabled');
+    for (var i = 0; i < window.constants.adFormFields.length; i++) {
+      window.constants.adFormFields[i].setAttribute('disabled', 'disabled');
+    }
+
+    window.main.inicializingMain();
+    window.flatList.clearPins();
+    window.flatList.hideCard();
+  };
+
+  var onSuccessLoading = function (code) {
+    if (code) {
+      var popup = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
+
+      var hidePopup = function (element) {
+        window.constants.mainTag.removeChild(element);
+        document.removeEventListener('keydown', onEscPress);
+        window.constants.adForm.reset();
+      };
+
+      var onEscPress = function (evt) {
+        if (evt.keyCode === window.constants.ESC_KEYCODE) {
+          hidePopup(popup);
+        }
+      };
+
+      document.addEventListener('keydown', onEscPress);
+
+      popup.addEventListener('click', function () {
+        hidePopup(popup);
+        deActivateMain();
+      });
+
+      window.constants.mainTag.appendChild(popup);
+    }
+  };
+
   var setMinPrice = function () {
     price.setAttribute('placeholder', houseTypeMinPrices[type.value]);
     price.setAttribute('min', houseTypeMinPrices[type.value]);
-  };
-
-  var setAddress = function () {
-    var mainPinCoordinates = window.constants.mainPin.getBoundingClientRect();
-    var mainPinCoordinatesX = mainPinCoordinates.x - window.constants.mapCoordinates.x;
-    var mainPinCoordinatesY = mainPinCoordinates.y - window.constants.mapCoordinates.y;
-    window.constants.adFormFieldAddress.value = '' + Math.round(mainPinCoordinatesX + window.constants.MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + window.constants.MAIN_PIN_SIZES.height);
   };
 
   var setCapacity = function (number) {
@@ -54,20 +89,7 @@ window.announcementForm = (function () {
     }
   };
 
-  type.addEventListener('change', setMinPrice);
-  timeIn.addEventListener('change', function () {
-    timeOut.value = timeIn.value;
-  });
-  timeOut.addEventListener('change', function () {
-    timeIn.value = timeOut.value;
-  });
-  roomNumber.addEventListener('change', function () {
-    setCapacity(roomNumber.value);
-  });
-  setCapacity(RoomCapacity[1]);
-
-
-  window.constants.adForm.addEventListener('submit', function (evt) {
+  var submitForm = function (evt) {
     evt.preventDefault();
 
     if (window.customValidation.validate()) {
@@ -78,13 +100,22 @@ window.announcementForm = (function () {
       /* window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
     }
 
-    address.disabled = false;
-    window.backend.save(window.constants.SAVE_URL, new FormData(AD_FORM), window.utils.onSuccessMessage, window.utils.onErrorMessage);
+    window.constants.adFormFieldAddress.disabled = false;
+    window.backend.save(window.constants.SAVE_URL, new FormData(window.constants.adForm), onSuccessLoading, window.utils.onErrorMessage);
+    window.constants.adFormFieldAddress.disabled = true;
+  };
 
+  type.addEventListener('change', setMinPrice);
+  timeIn.addEventListener('change', function () {
+    timeOut.value = timeIn.value;
+  });
+  timeOut.addEventListener('change', function () {
+    timeIn.value = timeOut.value;
+  });
+  roomNumber.addEventListener('change', function () {
+    setCapacity(roomNumber.value);
   });
 
-  return {
-    setAddress: setAddress,
-  };
+  window.constants.adForm.addEventListener('submit', submitForm);
 
 })();

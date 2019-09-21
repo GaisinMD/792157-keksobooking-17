@@ -5,15 +5,13 @@
 
 window.backend = (function () {
 
-  var CODE_SUCCESS = 200;
-
   return {
     load: function (url, onLoad, onError) {
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === CODE_SUCCESS) {
+        if (xhr.status === window.constants.CODE_SUCCESS) {
           onLoad(xhr.response);
         } else {
           onError(xhr.status);
@@ -29,12 +27,19 @@ window.backend = (function () {
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === CODE_SUCCESS) {
+        if (xhr.status === window.constants.CODE_SUCCESS) {
           onLoad(xhr.response);
         } else {
           onError(xhr.status);
         }
       });
+
+      /* let i = 0;
+      for(let [name, value] of data) {
+        console.log(`${i}: ${name} = ${value}`); // key1=value1, потом key2=value2
+        i++;
+      }
+      console.log(`--------------------------------`); // key1=value1, потом key2=value2*/
 
       xhr.open('POST', url);
       xhr.send(data);

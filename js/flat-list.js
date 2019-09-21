@@ -119,11 +119,15 @@ window.flatList = (function () {
     window.constants.pinList.appendChild(fragment);
   };
 
-  var sortFlatsbyType = function (list, type) {
+  var clearPins = function () {
     var pins = window.constants.mapPins.querySelectorAll('button[type="button"]');
+    window.utils.removeChildren(window.constants.mapPins, pins);
+  };
+
+  var sortFlatsbyType = function (list, type) {
     var result = [];
 
-    window.utils.removeChildren(window.constants.mapPins, pins);
+    clearPins();
     if (type.value !== 'any') {
       result = list.filter(function (element) {
         return element.offer.type === type.value;
@@ -141,8 +145,10 @@ window.flatList = (function () {
   });
 
   return {
+    clearPins: clearPins,
     generateFlatList: generateFlatList,
     sortFlatsbyType: sortFlatsbyType,
+    hideCard: hideCard,
   };
 
 })();
