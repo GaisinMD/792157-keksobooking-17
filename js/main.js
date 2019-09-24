@@ -11,14 +11,14 @@ window.main = (function () {
   var START_X = 570;
   var START_Y = 375;
 
-  var createPinList = function (response) {
+  var createPinsList = function (response) {
     window.constants.PIN_LIST = response;
     window.flatList.generateFlatList(window.constants.PIN_LIST);
   };
 
   var activateMain = function () {
     if (window.constants.map.classList.contains('map--faded')) {
-      window.backend.load(window.constants.LOAD_URL, createPinList, window.utils.onErrorMessage);
+      window.backend.load(window.constants.LOAD_URL, createPinsList, window.utils.onErrorMessage);
       window.constants.map.classList.remove('map--faded');
     }
     if (window.constants.adForm.classList.contains('ad-form--disabled')) {

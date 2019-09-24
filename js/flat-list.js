@@ -5,9 +5,19 @@
 
 window.flatList = (function () {
   var MAX_PINS = 5;
+  var filter = document.querySelector('.map__filters');
+  var filterItems = filter.querySelectorAll('select, input');
   var housingFilterList = {
-    housingType: document.querySelector('#housing-type')
+    housingType: document.querySelector('#housing-type'),
+    housingPrice: document.querySelector('#housing-price'),
+    housingRooms: document.querySelector('#housing-rooms'),
+    housingGuests: document.querySelector('#housing-guests'),
   };
+  var filterTypes = [
+    'type',
+    'rooms',
+    'guests'
+  ];
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var CARD = {
     title: cardTemplate.querySelector('.popup__title'),
@@ -124,25 +134,75 @@ window.flatList = (function () {
     window.utils.removeChildren(window.constants.mapPins, pins);
   };
 
-  var sortFlatsbyType = function (list, type) {
-    var result = [];
-
-    clearPins();
-    if (type.value !== 'any') {
-      result = list.filter(function (element) {
-        return element.offer.type === type.value;
+  var sortFlatsbyType = function (list, type, selector) {
+    var resultByType = [];
+    if (selector.value !== 'any') {
+      resultByType = list.filter(function (element) {
+        console.log(element.offer[type]);
+        return ('' + element.offer[type] === selector.value);
       });
     } else {
-      result = list;
+      resultByType = list;
     }
+    return resultByType;
+  };
 
+  var sortFlatsbyPrice = function (list) {
+    var resultByPrice = [];
+    var Prices = {
+      low: [0, 10000],
+      middle: [10000, 50000],
+      high: [50000, Infinity]
+    };
+    if (housingFilterList.housingPrice.value !== 'any') {
+      resultByPrice = list.filter(function (element) {
+        return (Prices[housingFilterList.housingPrice.value][0] <= element.offer.price && element.offer.price < Prices[housingFilterList.housingPrice.value][1]);
+      });
+    } else {
+      resultByPrice = list;
+    }
+    return resultByPrice;
+  };
+
+  var sortFlats = function () {
+    var result = window.constants.PIN_LIST;
+    clearPins();
+    result = sortFlatsbyType(result, filterTypes[0], housingFilterList.housingType);
+    result = sortFlatsbyPrice(result);
+    result = sortFlatsbyType(result, filterTypes[1], housingFilterList.housingRooms);
+    result = sortFlatsbyType(result, filterTypes[2], housingFilterList.housingGuests);
     generateFlatList(result);
   };
 
-  housingFilterList.housingType.addEventListener('change', function (evt) {
+
+  var activateFilter = function () {
+    filterItems.forEach(function (element) {
+      element.addEventListener('change', sortFlats);
+    });
+
+  };
+
+  activateFilter();
+
+  /*housingFilterList.housingType.addEventListener('change', function (evt) {
     evt.preventDefault();
-    sortFlatsbyType(window.constants.PIN_LIST, evt.target);
+    sortFlats(window.constants.PIN_LIST);
   });
+
+  housingFilterList.housingPrice.addEventListener('change', function (evt) {
+    evt.preventDefault();
+    sortFlats(window.constants.PIN_LIST);
+  });
+
+  housingFilterList.housingRooms.addEventListener('change', function (evt) {
+    evt.preventDefault();
+    sortFlats(window.constants.PIN_LIST);
+  });
+
+  housingFilterList.housingGuests.addEventListener('change', function (evt) {
+    evt.preventDefault();
+    sortFlats(window.constants.PIN_LIST);
+  });*/
 
   return {
     clearPins: clearPins,
