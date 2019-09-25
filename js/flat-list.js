@@ -12,6 +12,7 @@ window.flatList = (function () {
     housingPrice: document.querySelector('#housing-price'),
     housingRooms: document.querySelector('#housing-rooms'),
     housingGuests: document.querySelector('#housing-guests'),
+    housingFeatures: document.querySelector('#housing-features').querySelectorAll('input'),
   };
   var filterTypes = [
     'type',
@@ -138,7 +139,7 @@ window.flatList = (function () {
     var resultByType = [];
     if (selector.value !== 'any') {
       resultByType = list.filter(function (element) {
-        console.log(element.offer[type]);
+        // console.log(element.offer[type]);
         return ('' + element.offer[type] === selector.value);
       });
     } else {
@@ -164,6 +165,24 @@ window.flatList = (function () {
     return resultByPrice;
   };
 
+  var sortFlatsbyFeatures = function (list) {
+    var resultByFeatures = [];
+    var featuresFilter = [];
+    for (var i = 0; i < housingFilterList.housingFeatures.length; i++) {
+      if (housingFilterList.housingFeatures[i].checked === true) {
+        featuresFilter.push(housingFilterList.housingFeatures[i].value);
+      }
+    }
+
+    resultByFeatures = list.filter(function (element) {
+      return (featuresFilter.every(function (el) {
+        return element.offer.features.includes(el);
+      }));
+    });
+
+    return resultByFeatures;
+  };
+
   var sortFlats = function () {
     var result = window.constants.PIN_LIST;
     clearPins();
@@ -171,20 +190,21 @@ window.flatList = (function () {
     result = sortFlatsbyPrice(result);
     result = sortFlatsbyType(result, filterTypes[1], housingFilterList.housingRooms);
     result = sortFlatsbyType(result, filterTypes[2], housingFilterList.housingGuests);
+    result = sortFlatsbyFeatures(result);
     generateFlatList(result);
   };
 
-
   var activateFilter = function () {
     filterItems.forEach(function (element) {
-      element.addEventListener('change', sortFlats);
+      element.addEventListener('change', function () {
+        window.utils.setDebounce(sortFlats)();
+      });
     });
-
   };
 
   activateFilter();
 
-  /*housingFilterList.housingType.addEventListener('change', function (evt) {
+  /* housingFilterList.housingType.addEventListener('change', function (evt) {
     evt.preventDefault();
     sortFlats(window.constants.PIN_LIST);
   });
