@@ -25,6 +25,49 @@ window.announcementForm = (function () {
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
 
+  var UPLOAD_FILE_AVATAR = document.querySelector('#avatar');
+  var UPLOAD_FILE_AD_FORM = document.querySelector('#images');
+  var avatar = document.querySelector('.ad-form-header__preview').querySelector('img');
+  var adFormImagesContainer = document.querySelector('.ad-form__photo-container');
+  var imgTemplate = document.querySelector('#ad_photo').content.querySelector('.ad-form__photo');
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var ERROR_FILE_TYPE_MESSAGE = 'Неверный тип файла';
+
+  var createAvatar = function (img, reader) {
+    img.src = reader.result;
+  };
+
+  var createImagesAdForm = function (img, reader) {
+    img.querySelector('img').src = reader.result;
+    adFormImagesContainer.appendChild(img);
+    // window.utils.setSlider(img, null);
+  };
+
+  var validateLoad = function (target, img) {
+    var file = target.files[0];
+    if (file) {
+      var fileName = file.name.toLowerCase();
+      var matches = FILE_TYPES.some(function (it) {
+        return fileName.endsWith(it);
+      });
+      if (matches) {
+        var reader = new FileReader();
+        reader.addEventListener('load', function () {
+          if (target === UPLOAD_FILE_AVATAR) {
+            createAvatar(img, reader);
+          }
+          if (target === UPLOAD_FILE_AD_FORM) {
+            createImagesAdForm(imgTemplate.cloneNode(true), reader);
+          }
+        });
+        reader.readAsDataURL(file);
+      } else {
+        window.utils.onErrorMessage(ERROR_FILE_TYPE_MESSAGE);
+      }
+    }
+    return img;
+  };
+
   var deActivateMain = function () {
     if (!window.constants.map.classList.contains('map--faded')) {
       window.constants.map.classList.add('map--faded');
@@ -104,6 +147,15 @@ window.announcementForm = (function () {
     window.backend.save(window.constants.SAVE_URL, new FormData(window.constants.adForm), onSuccessLoading, window.utils.onErrorMessage);
     window.constants.adFormFieldAddress.disabled = true;
   };
+
+
+  UPLOAD_FILE_AVATAR.addEventListener('change', function (evt) {
+    validateLoad(evt.target, avatar);
+  });
+
+  UPLOAD_FILE_AD_FORM.addEventListener('change', function (evt) {
+    validateLoad(evt.target, avatar);
+  });
 
   type.addEventListener('change', setMinPrice);
   timeIn.addEventListener('change', function () {
