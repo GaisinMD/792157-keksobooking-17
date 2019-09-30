@@ -57,10 +57,10 @@ window.main = (function () {
   var inicializingMain = function () {
     setPin(START_X, START_Y);
     window.constants.mainPin.addEventListener('mousedown', activateMain);
-    window.utils.setSlider(window.constants.mainPin, getEffectValue);
   };
 
   inicializingMain();
+  window.utils.setSlider(window.constants.mainPin, getEffectValue);
 
   return {
     inicializingMain: inicializingMain,
