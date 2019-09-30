@@ -18,6 +18,8 @@ window.announcementForm = (function () {
     'palace': 10000,
   };
 
+  var adFormReset = document.querySelector('.ad-form__reset');
+
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
   var type = document.querySelector('#type');
@@ -26,9 +28,11 @@ window.announcementForm = (function () {
   var capacity = document.querySelector('#capacity');
 
   var UPLOAD_FILE_AVATAR = document.querySelector('#avatar');
+  var DEFAULT_FILE_AVATAR_SOURCE = 'img/muffin-grey.svg';
   var UPLOAD_FILE_AD_FORM = document.querySelector('#images');
   var avatar = document.querySelector('.ad-form-header__preview').querySelector('img');
   var adFormImagesContainer = document.querySelector('.ad-form__photo-container');
+  var adFormImageClass = '.ad-form__photo';
   var imgTemplate = document.querySelector('#ad_photo').content.querySelector('.ad-form__photo');
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var ERROR_FILE_TYPE_MESSAGE = 'Неверный тип файла';
@@ -40,7 +44,6 @@ window.announcementForm = (function () {
   var createImagesAdForm = function (img, reader) {
     img.querySelector('img').src = reader.result;
     adFormImagesContainer.appendChild(img);
-    // window.utils.setSlider(img, null);
   };
 
   var validateLoad = function (target, img) {
@@ -80,6 +83,9 @@ window.announcementForm = (function () {
       window.constants.adFormFields[i].setAttribute('disabled', 'disabled');
     }
 
+    window.constants.adForm.reset();
+    avatar.src = DEFAULT_FILE_AVATAR_SOURCE;
+    window.utils.removeChildren(adFormImagesContainer, adFormImagesContainer.querySelectorAll(adFormImageClass));
     window.main.inicializingMain();
     window.flatList.clearPins();
     window.flatList.hideCard();
@@ -92,7 +98,6 @@ window.announcementForm = (function () {
       var hidePopup = function (element) {
         window.constants.mainTag.removeChild(element);
         document.removeEventListener('keydown', onEscPress);
-        window.constants.adForm.reset();
       };
 
       var onEscPress = function (evt) {
@@ -169,5 +174,6 @@ window.announcementForm = (function () {
   });
 
   window.constants.adForm.addEventListener('submit', submitForm);
+  adFormReset.addEventListener('click', deActivateMain);
 
 })();

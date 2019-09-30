@@ -11,6 +11,8 @@ window.main = (function () {
   var START_X = 570;
   var START_Y = 375;
 
+  var MAP_FILTERS = document.querySelector('.map__filters');
+
   var createPinsList = function (response) {
     window.constants.PIN_LIST = response;
     window.flatList.generateFlatList(window.constants.PIN_LIST);
@@ -28,6 +30,7 @@ window.main = (function () {
     for (var i = 0; i < window.constants.adFormFields.length; i++) {
       window.constants.adFormFields[i].removeAttribute('disabled');
     }
+    MAP_FILTERS.reset();
     window.constants.mainPin.removeEventListener('mousedown', activateMain);
   };
 
