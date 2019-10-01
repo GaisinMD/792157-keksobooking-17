@@ -1,4 +1,4 @@
-// Выполняемые задачи: Библиотека констант и переменных для формы редактирования
+// Выполняемые задачи: Библиотека констант
 // Зависимости:
 
 'use strict';
@@ -15,14 +15,14 @@ window.constants = (function () {
 
     PIN_LIST: [],
 
-    mainTag: document.querySelector('main'),
-    map: document.querySelector('.map'),
-    mapPins: document.querySelector('.map__pins'),
+    MAIN_TAG: document.querySelector('main'),
+    MAP: document.querySelector('.map'),
+    MAP_PINS: document.querySelector('.map__pins'),
 
-    adForm: document.querySelector('.ad-form'),
-    adFormHeader: document.querySelector('.ad-form-header'),
-    adFormFields: document.querySelectorAll('.ad-form__element'),
-    adFormFieldAddress: document.querySelector('#address'),
+    AD_FORM: document.querySelector('.ad-form'),
+    AD_FORM_HEADER: document.querySelector('.ad-form-header'),
+    AD_FORM_FIELDS: document.querySelectorAll('.ad-form__element'),
+    AD_FORM_FIELD_ADRRESS: document.querySelector('#address'),
 
   };
 

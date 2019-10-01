@@ -79,18 +79,18 @@ window.announcementForm = (function () {
   };
 
   var deActivateMain = function () {
-    if (!window.constants.map.classList.contains('map--faded')) {
-      window.constants.map.classList.add('map--faded');
+    if (!window.constants.MAP.classList.contains('map--faded')) {
+      window.constants.MAP.classList.add('map--faded');
     }
-    if (!window.constants.adForm.classList.contains('ad-form--disabled')) {
-      window.constants.adForm.classList.add('ad-form--disabled');
+    if (!window.constants.AD_FORM.classList.contains('ad-form--disabled')) {
+      window.constants.AD_FORM.classList.add('ad-form--disabled');
     }
-    window.constants.adFormHeader.setAttribute('disabled', 'disabled');
-    for (var i = 0; i < window.constants.adFormFields.length; i++) {
-      window.constants.adFormFields[i].setAttribute('disabled', 'disabled');
+    window.constants.AD_FORM_HEADER.setAttribute('disabled', 'disabled');
+    for (var i = 0; i < window.constants.AD_FORM_FIELDS.length; i++) {
+      window.constants.AD_FORM_FIELDS[i].setAttribute('disabled', 'disabled');
     }
 
-    window.constants.adForm.reset();
+    window.constants.AD_FORM.reset();
     setMinPrice();
     avatar.src = DEFAULT_FILE_AVATAR_SOURCE;
     window.utils.removeChildren(adFormImagesContainer, adFormImagesContainer.querySelectorAll(adFormImageClass));
@@ -104,7 +104,7 @@ window.announcementForm = (function () {
       var popup = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
 
       var hidePopup = function (element) {
-        window.constants.mainTag.removeChild(element);
+        window.constants.MAIN_TAG.removeChild(element);
         document.removeEventListener('keydown', onEscPress);
         deActivateMain();
       };
@@ -121,7 +121,7 @@ window.announcementForm = (function () {
         hidePopup(popup);
       });
 
-      window.constants.mainTag.appendChild(popup);
+      window.constants.MAIN_TAG.appendChild(popup);
     }
   };
 
@@ -151,9 +151,9 @@ window.announcementForm = (function () {
       /* window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
     }
 
-    window.constants.adFormFieldAddress.disabled = false;
-    window.backend.save(SAVE_URL, new FormData(window.constants.adForm), onSuccessLoading, window.utils.onErrorMessage);
-    window.constants.adFormFieldAddress.disabled = true;
+    window.constants.AD_FORM_FIELD_ADRRESS.disabled = false;
+    window.backend.save(SAVE_URL, new FormData(window.constants.AD_FORM), onSuccessLoading, window.utils.onErrorMessage);
+    window.constants.AD_FORM_FIELD_ADRRESS.disabled = true;
   };
 
 
@@ -176,7 +176,7 @@ window.announcementForm = (function () {
     setCapacity(roomNumber.value);
   });
 
-  window.constants.adForm.addEventListener('submit', submitForm);
+  window.constants.AD_FORM.addEventListener('submit', submitForm);
   adFormReset.addEventListener('click', deActivateMain);
 
 })();

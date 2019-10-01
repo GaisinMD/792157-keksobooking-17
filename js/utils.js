@@ -77,7 +77,7 @@ window.utils = (function () {
       var header = popup.querySelector('.error__message');
 
       var hidePopup = function (element) {
-        window.constants.mainTag.removeChild(element);
+        window.constants.MAIN_TAG.removeChild(element);
         document.removeEventListener('keydown', onEscPress);
       };
 
@@ -95,7 +95,7 @@ window.utils = (function () {
       document.addEventListener('keydown', onEscPress);
 
       header.textContent = header.textContent + ': ' + code;
-      window.constants.mainTag.appendChild(popup);
+      window.constants.MAIN_TAG.appendChild(popup);
     },
 
   };

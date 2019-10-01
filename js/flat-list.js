@@ -134,8 +134,8 @@ window.flatList = (function () {
   };
 
   var clearPins = function () {
-    var pins = window.constants.mapPins.querySelectorAll('button[type="button"]');
-    window.utils.removeChildren(window.constants.mapPins, pins);
+    var pins = window.constants.MAP_PINS.querySelectorAll('button[type="button"]');
+    window.utils.removeChildren(window.constants.MAP_PINS, pins);
   };
 
   var sortFlatsbyType = function (list, type, selector) {

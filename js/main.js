@@ -11,7 +11,7 @@ window.main = (function () {
 
   var MIN_X = -33;
   var MIN_Y = 130;
-  var MAX_X = window.constants.mapPins.clientWidth - 33;
+  var MAX_X = window.constants.MAP_PINS.clientWidth - 33;
   var MAX_Y = 630;
   var GAP_Y = 70;
   var START_X = 570;
@@ -30,16 +30,16 @@ window.main = (function () {
   };
 
   var activateMain = function () {
-    if (window.constants.map.classList.contains('map--faded')) {
+    if (window.constants.MAP.classList.contains('map--faded')) {
       window.backend.load(LOAD_URL, createPinsList, window.utils.onErrorMessage);
-      window.constants.map.classList.remove('map--faded');
+      window.constants.MAP.classList.remove('map--faded');
     }
-    if (window.constants.adForm.classList.contains('ad-form--disabled')) {
-      window.constants.adForm.classList.remove('ad-form--disabled');
+    if (window.constants.AD_FORM.classList.contains('ad-form--disabled')) {
+      window.constants.AD_FORM.classList.remove('ad-form--disabled');
     }
-    window.constants.adFormHeader.removeAttribute('disabled');
-    for (var i = 0; i < window.constants.adFormFields.length; i++) {
-      window.constants.adFormFields[i].removeAttribute('disabled');
+    window.constants.AD_FORM_HEADER.removeAttribute('disabled');
+    for (var i = 0; i < window.constants.AD_FORM_FIELDS.length; i++) {
+      window.constants.AD_FORM_FIELDS[i].removeAttribute('disabled');
     }
     MAP_FILTERS.reset();
     mainPin.removeEventListener('mousedown', activateMain);
@@ -49,7 +49,7 @@ window.main = (function () {
     var mainPinCoordinates = mainPin.getBoundingClientRect();
     var mainPinCoordinatesX = mainPinCoordinates.x - mapCoordinates.x;
     var mainPinCoordinatesY = mainPinCoordinates.y - mapCoordinates.y - GAP_Y;
-    window.constants.adFormFieldAddress.value = '' + Math.round(mainPinCoordinatesX + MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + MAIN_PIN_SIZES.height);
+    window.constants.AD_FORM_FIELD_ADRRESS.value = '' + Math.round(mainPinCoordinatesX + MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + MAIN_PIN_SIZES.height);
   };
 
   var setPin = function (coordinateX, coordinateY) {
