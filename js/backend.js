@@ -8,35 +8,35 @@ window.backend = (function () {
 
   return {
     load: function (url, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
+      var XHR = new XMLHttpRequest();
+      XHR.responseType = 'json';
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === CODE_SUCCESS) {
-          onLoad(xhr.response);
+      XHR.addEventListener('load', function () {
+        if (XHR.status === CODE_SUCCESS) {
+          onLoad(XHR.response);
         } else {
-          onError(xhr.status);
+          onError(XHR.status);
         }
       });
 
-      xhr.open('GET', url);
-      xhr.send();
+      XHR.open('GET', url);
+      XHR.send();
     },
 
     save: function (url, data, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
+      var XHR = new XMLHttpRequest();
+      XHR.responseType = 'json';
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === CODE_SUCCESS) {
-          onLoad(xhr.response);
+      XHR.addEventListener('load', function () {
+        if (XHR.status === CODE_SUCCESS) {
+          onLoad(XHR.response);
         } else {
-          onError(xhr.status);
+          onError(XHR.status);
         }
       });
 
-      xhr.open('POST', url);
-      xhr.send(data);
+      XHR.open('POST', url);
+      XHR.send(data);
     }
 
   };
