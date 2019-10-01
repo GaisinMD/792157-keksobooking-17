@@ -4,6 +4,8 @@
 'use strict';
 
 window.announcementForm = (function () {
+  var SAVE_URL = 'https://js.dump.academy/keksobooking';
+
   var RoomCapacity = {
     1: ['1'],
     2: ['1', '2'],
@@ -150,7 +152,7 @@ window.announcementForm = (function () {
     }
 
     window.constants.adFormFieldAddress.disabled = false;
-    window.backend.save(window.constants.SAVE_URL, new FormData(window.constants.adForm), onSuccessLoading, window.utils.onErrorMessage);
+    window.backend.save(SAVE_URL, new FormData(window.constants.adForm), onSuccessLoading, window.utils.onErrorMessage);
     window.constants.adFormFieldAddress.disabled = true;
   };
 

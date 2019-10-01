@@ -5,6 +5,9 @@
 
 window.flatList = (function () {
   var MAX_PINS = 5;
+  var mapFilter = document.querySelector('.map__filters-container');
+  var pinList = document.querySelector('.map__pins');
+
   var filter = document.querySelector('.map__filters');
   var filterItems = filter.querySelectorAll('select, input');
   var housingFilterList = {
@@ -105,7 +108,7 @@ window.flatList = (function () {
     CARD.close.addEventListener('click', hideCard);
     document.addEventListener('keydown', onCardPressEsc);
 
-    window.constants.mapFilter.before(fragment.appendChild(cardTemplate));
+    mapFilter.before(fragment.appendChild(cardTemplate));
     window.utils.showElement(cardTemplate);
   };
 
@@ -127,7 +130,7 @@ window.flatList = (function () {
     for (var i = 0; i < maxPins; i++) {
       fragment.appendChild(generatePin(pinTemplate.cloneNode(true), response[i]));
     }
-    window.constants.pinList.appendChild(fragment);
+    pinList.appendChild(fragment);
   };
 
   var clearPins = function () {
@@ -203,26 +206,6 @@ window.flatList = (function () {
   };
 
   activateFilter();
-
-  /* housingFilterList.housingType.addEventListener('change', function (evt) {
-    evt.preventDefault();
-    sortFlats(window.constants.PIN_LIST);
-  });
-
-  housingFilterList.housingPrice.addEventListener('change', function (evt) {
-    evt.preventDefault();
-    sortFlats(window.constants.PIN_LIST);
-  });
-
-  housingFilterList.housingRooms.addEventListener('change', function (evt) {
-    evt.preventDefault();
-    sortFlats(window.constants.PIN_LIST);
-  });
-
-  housingFilterList.housingGuests.addEventListener('change', function (evt) {
-    evt.preventDefault();
-    sortFlats(window.constants.PIN_LIST);
-  });*/
 
   return {
     clearPins: clearPins,
