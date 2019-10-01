@@ -151,9 +151,9 @@ window.announcementForm = (function () {
       /* window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
     }
 
-    window.constants.AD_FORM_FIELD_ADRRESS.disabled = false;
+    window.constants.AD_FORM_FIELD_ADDRESS.disabled = false;
     window.backend.save(SAVE_URL, new FormData(window.constants.AD_FORM), onSuccessLoading, window.utils.onErrorMessage);
-    window.constants.AD_FORM_FIELD_ADRRESS.disabled = true;
+    window.constants.AD_FORM_FIELD_ADDRESS.disabled = true;
   };
 
 

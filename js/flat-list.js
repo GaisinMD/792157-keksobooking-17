@@ -5,35 +5,33 @@
 
 window.flatList = (function () {
   var MAX_PINS = 5;
-  var mapFilter = document.querySelector('.map__filters-container');
-
-  var filter = document.querySelector('.map__filters');
-  var filterItems = filter.querySelectorAll('select, input');
+  var MAP_FILTERS = document.querySelector('.map__filters-container');
+  var FILTER_LIST = document.querySelector('.map__filters').querySelectorAll('select, input');
   var housingFilterList = {
-    housingType: document.querySelector('#housing-type'),
-    housingPrice: document.querySelector('#housing-price'),
-    housingRooms: document.querySelector('#housing-rooms'),
-    housingGuests: document.querySelector('#housing-guests'),
-    housingFeatures: document.querySelector('#housing-features').querySelectorAll('input'),
+    HOUSING_TYPE: document.querySelector('#housing-type'),
+    HOUSING_PRICE: document.querySelector('#housing-price'),
+    HOUSING_ROOMS: document.querySelector('#housing-rooms'),
+    HOUSING_GUESTS: document.querySelector('#housing-guests'),
+    HOUSING_FEATURES: document.querySelector('#housing-features').querySelectorAll('input'),
   };
   var filterTypes = [
     'type',
     'rooms',
     'guests'
   ];
-  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-  var CARD = {
-    title: cardTemplate.querySelector('.popup__title'),
-    address: cardTemplate.querySelector('.popup__text--address'),
-    price: cardTemplate.querySelector('.popup__text--price'),
-    type: cardTemplate.querySelector('.popup__type'),
-    roomsGuests: cardTemplate.querySelector('.popup__text--capacity'),
-    time: cardTemplate.querySelector('.popup__text--time'),
-    features: cardTemplate.querySelector('.popup__features'),
-    description: cardTemplate.querySelector('.popup__description'),
-    photos: cardTemplate.querySelector('.popup__photos'),
-    avatar: cardTemplate.querySelector('.popup__avatar'),
-    close: cardTemplate.querySelector('.popup__close'),
+  var CARD_TEMPLATE = document.querySelector('#card').content.querySelector('.map__card');
+  var card = {
+    TITLE: CARD_TEMPLATE.querySelector('.popup__title'),
+    ADDRESS: CARD_TEMPLATE.querySelector('.popup__text--address'),
+    PRICE: CARD_TEMPLATE.querySelector('.popup__text--price'),
+    TYPE: CARD_TEMPLATE.querySelector('.popup__type'),
+    ROOM_GUESTS: CARD_TEMPLATE.querySelector('.popup__text--capacity'),
+    TIME: CARD_TEMPLATE.querySelector('.popup__text--time'),
+    FEATURES: CARD_TEMPLATE.querySelector('.popup__features'),
+    DESCRIPTION: CARD_TEMPLATE.querySelector('.popup__description'),
+    PHOTOS: CARD_TEMPLATE.querySelector('.popup__photos'),
+    AVATAR: CARD_TEMPLATE.querySelector('.popup__avatar'),
+    CLOSE: CARD_TEMPLATE.querySelector('.popup__close'),
   };
   var priceUnitText = 'Р/ночь';
   var houseTypes = {
@@ -56,19 +54,19 @@ window.flatList = (function () {
   var fragment = document.createDocumentFragment();
 
   var generateFlatFeatures = function (list) {
-    var featuresList = CARD.features.querySelectorAll('li');
-    window.utils.removeChildren(CARD.features, featuresList);
+    var featuresList = card.FEATURES.querySelectorAll('li');
+    window.utils.removeChildren(card.FEATURES, featuresList);
     for (var i = 0; i < list.length; i++) {
       var featureItem = document.createElement('li');
       featureItem.className = featureItemClass + list[i];
       fragment.appendChild(featureItem);
     }
-    CARD.features.appendChild(fragment);
+    card.FEATURES.appendChild(fragment);
   };
 
   var generateFlatPhotos = function (list) {
-    var photosList = CARD.photos.querySelectorAll('img');
-    window.utils.removeChildren(CARD.photos, photosList);
+    var photosList = card.PHOTOS.querySelectorAll('img');
+    window.utils.removeChildren(card.PHOTOS, photosList);
     for (var i = 0; i < list.length; i++) {
       var photoItem = document.createElement('img');
       photoItem.className = photoClass;
@@ -78,12 +76,12 @@ window.flatList = (function () {
       photoItem.alt = photoAlt;
       fragment.appendChild(photoItem);
     }
-    CARD.photos.appendChild(fragment);
+    card.PHOTOS.appendChild(fragment);
   };
 
   var hideCard = function () {
-    window.utils.hideElement(cardTemplate);
-    CARD.close.removeEventListener('click', hideCard);
+    window.utils.hideElement(CARD_TEMPLATE);
+    card.CLOSE.removeEventListener('click', hideCard);
     document.removeEventListener('keydown', onCardPressEsc);
   };
 
@@ -94,21 +92,21 @@ window.flatList = (function () {
   };
 
   var generateCard = function (item) {
-    CARD.title.textContent = item.offer.title;
-    CARD.address.textContent = item.offer.address;
-    CARD.price.textContent = '' + item.offer.price + priceUnitText;
-    CARD.type.textContent = houseTypes[item.offer.type];
-    CARD.roomsGuests.textContent = item.offer.rooms + roomsText + item.offer.guests + guestsText;
-    CARD.time.textContent = chekInText + item.offer.checkin + chekOutText + item.offer.checkout;
+    card.TITLE.textContent = item.offer.title;
+    card.ADDRESS.textContent = item.offer.address;
+    card.PRICE.textContent = '' + item.offer.price + priceUnitText;
+    card.TYPE.textContent = houseTypes[item.offer.type];
+    card.ROOM_GUESTS.textContent = item.offer.rooms + roomsText + item.offer.guests + guestsText;
+    card.TIME.textContent = chekInText + item.offer.checkin + chekOutText + item.offer.checkout;
     generateFlatFeatures(item.offer.features);
-    CARD.description.textContent = item.offer.description;
+    card.DESCRIPTION.textContent = item.offer.description;
     generateFlatPhotos(item.offer.photos);
-    CARD.avatar.src = item.author.avatar;
-    CARD.close.addEventListener('click', hideCard);
+    card.AVATAR.src = item.author.avatar;
+    card.CLOSE.addEventListener('click', hideCard);
     document.addEventListener('keydown', onCardPressEsc);
 
-    mapFilter.before(fragment.appendChild(cardTemplate));
-    window.utils.showElement(cardTemplate);
+    MAP_FILTERS.before(fragment.appendChild(CARD_TEMPLATE));
+    window.utils.showElement(CARD_TEMPLATE);
   };
 
   var generatePin = function (template, pinItem) {
@@ -156,9 +154,9 @@ window.flatList = (function () {
       middle: [10000, 50000],
       high: [50000, Infinity]
     };
-    if (housingFilterList.housingPrice.value !== 'any') {
+    if (housingFilterList.HOUSING_PRICE.value !== 'any') {
       resultByPrice = list.filter(function (element) {
-        return (Prices[housingFilterList.housingPrice.value][0] <= element.offer.price && element.offer.price < Prices[housingFilterList.housingPrice.value][1]);
+        return (Prices[housingFilterList.HOUSING_PRICE.value][0] <= element.offer.price && element.offer.price < Prices[housingFilterList.HOUSING_PRICE.value][1]);
       });
     } else {
       resultByPrice = list;
@@ -169,9 +167,9 @@ window.flatList = (function () {
   var sortFlatsbyFeatures = function (list) {
     var resultByFeatures = [];
     var featuresFilter = [];
-    for (var i = 0; i < housingFilterList.housingFeatures.length; i++) {
-      if (housingFilterList.housingFeatures[i].checked === true) {
-        featuresFilter.push(housingFilterList.housingFeatures[i].value);
+    for (var i = 0; i < housingFilterList.HOUSING_FEATURES.length; i++) {
+      if (housingFilterList.HOUSING_FEATURES[i].checked === true) {
+        featuresFilter.push(housingFilterList.HOUSING_FEATURES[i].value);
       }
     }
 
@@ -187,17 +185,17 @@ window.flatList = (function () {
   var sortFlats = function () {
     var result = window.constants.PIN_LIST;
     clearPins();
-    result = sortFlatsbyType(result, filterTypes[0], housingFilterList.housingType);
+    result = sortFlatsbyType(result, filterTypes[0], housingFilterList.HOUSING_TYPE);
     result = sortFlatsbyPrice(result);
-    result = sortFlatsbyType(result, filterTypes[1], housingFilterList.housingRooms);
-    result = sortFlatsbyType(result, filterTypes[2], housingFilterList.housingGuests);
+    result = sortFlatsbyType(result, filterTypes[1], housingFilterList.HOUSING_ROOMS);
+    result = sortFlatsbyType(result, filterTypes[2], housingFilterList.HOUSING_GUESTS);
     result = sortFlatsbyFeatures(result);
     hideCard();
     generateFlatList(result);
   };
 
   var activateFilter = function () {
-    filterItems.forEach(function (element) {
+    FILTER_LIST.forEach(function (element) {
       element.addEventListener('change', function () {
         window.utils.setDebounce(sortFlats)();
       });

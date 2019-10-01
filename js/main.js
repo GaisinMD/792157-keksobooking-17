@@ -49,7 +49,7 @@ window.main = (function () {
     var mainPinCoordinates = mainPin.getBoundingClientRect();
     var mainPinCoordinatesX = mainPinCoordinates.x - mapCoordinates.x;
     var mainPinCoordinatesY = mainPinCoordinates.y - mapCoordinates.y - GAP_Y;
-    window.constants.AD_FORM_FIELD_ADRRESS.value = '' + Math.round(mainPinCoordinatesX + MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + MAIN_PIN_SIZES.height);
+    window.constants.AD_FORM_FIELD_ADDRESS.value = '' + Math.round(mainPinCoordinatesX + MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + MAIN_PIN_SIZES.height);
   };
 
   var setPin = function (coordinateX, coordinateY) {
