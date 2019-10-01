@@ -6,7 +6,6 @@
 window.flatList = (function () {
   var MAX_PINS = 5;
   var mapFilter = document.querySelector('.map__filters-container');
-  var pinList = document.querySelector('.map__pins');
 
   var filter = document.querySelector('.map__filters');
   var filterItems = filter.querySelectorAll('select, input');
@@ -130,7 +129,7 @@ window.flatList = (function () {
     for (var i = 0; i < maxPins; i++) {
       fragment.appendChild(generatePin(pinTemplate.cloneNode(true), response[i]));
     }
-    pinList.appendChild(fragment);
+    window.constants.MAP_PINS.appendChild(fragment);
   };
 
   var clearPins = function () {
