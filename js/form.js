@@ -71,6 +71,11 @@ window.announcementForm = (function () {
     return img;
   };
 
+  var setMinPrice = function () {
+    price.setAttribute('placeholder', houseTypeMinPrices[type.value]);
+    price.setAttribute('min', houseTypeMinPrices[type.value]);
+  };
+
   var deActivateMain = function () {
     if (!window.constants.map.classList.contains('map--faded')) {
       window.constants.map.classList.add('map--faded');
@@ -84,6 +89,7 @@ window.announcementForm = (function () {
     }
 
     window.constants.adForm.reset();
+    setMinPrice();
     avatar.src = DEFAULT_FILE_AVATAR_SOURCE;
     window.utils.removeChildren(adFormImagesContainer, adFormImagesContainer.querySelectorAll(adFormImageClass));
     window.main.inicializingMain();
@@ -98,6 +104,7 @@ window.announcementForm = (function () {
       var hidePopup = function (element) {
         window.constants.mainTag.removeChild(element);
         document.removeEventListener('keydown', onEscPress);
+        deActivateMain();
       };
 
       var onEscPress = function (evt) {
@@ -110,16 +117,10 @@ window.announcementForm = (function () {
 
       popup.addEventListener('click', function () {
         hidePopup(popup);
-        deActivateMain();
       });
 
       window.constants.mainTag.appendChild(popup);
     }
-  };
-
-  var setMinPrice = function () {
-    price.setAttribute('placeholder', houseTypeMinPrices[type.value]);
-    price.setAttribute('min', houseTypeMinPrices[type.value]);
   };
 
   var setCapacity = function (number) {

@@ -8,6 +8,7 @@ window.main = (function () {
   var MIN_Y = 130;
   var MAX_X = window.constants.mapPins.clientWidth - 33;
   var MAX_Y = 630;
+  var GAP_Y = 70;
   var START_X = 570;
   var START_Y = 375;
 
@@ -37,7 +38,7 @@ window.main = (function () {
   var setAddress = function () {
     var mainPinCoordinates = window.constants.mainPin.getBoundingClientRect();
     var mainPinCoordinatesX = mainPinCoordinates.x - window.constants.mapCoordinates.x;
-    var mainPinCoordinatesY = mainPinCoordinates.y - window.constants.mapCoordinates.y;
+    var mainPinCoordinatesY = mainPinCoordinates.y - window.constants.mapCoordinates.y - GAP_Y;
     window.constants.adFormFieldAddress.value = '' + Math.round(mainPinCoordinatesX + window.constants.MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + window.constants.MAIN_PIN_SIZES.height);
   };
 

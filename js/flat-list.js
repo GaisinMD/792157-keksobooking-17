@@ -139,7 +139,6 @@ window.flatList = (function () {
     var resultByType = [];
     if (selector.value !== 'any') {
       resultByType = list.filter(function (element) {
-        // console.log(element.offer[type]);
         return ('' + element.offer[type] === selector.value);
       });
     } else {
@@ -191,6 +190,7 @@ window.flatList = (function () {
     result = sortFlatsbyType(result, filterTypes[1], housingFilterList.housingRooms);
     result = sortFlatsbyType(result, filterTypes[2], housingFilterList.housingGuests);
     result = sortFlatsbyFeatures(result);
+    hideCard();
     generateFlatList(result);
   };
 
