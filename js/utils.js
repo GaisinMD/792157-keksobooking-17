@@ -40,25 +40,6 @@ window.utils = (function () {
       }
     },
 
-    // случайное целое число
-    getRandomInteger: function (min, max) {
-      var rand = min + Math.random() * (max + 1 - min);
-      return Math.floor(rand);
-    },
-
-    // перемешивание массива
-    shuffleList: function (list) {
-      var y;
-      var x;
-      for (var i = list.length - 1; i > 0; i--) {
-        y = window.utils.getRandomInteger(0, i);
-        x = list[i];
-        list[i] = list[y];
-        list[y] = x;
-      }
-      return list;
-    },
-
     // слайдер
     setSlider: function (pin, callback) {
       pin.addEventListener('mousedown', function (evt) {
