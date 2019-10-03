@@ -143,14 +143,6 @@ window.announcementForm = (function () {
   var submitForm = function (evt) {
     evt.preventDefault();
 
-    if (window.customValidation.validate()) {
-      /* window.customValidation.HASHTAGS.setCustomValidity('');
-      window.backend.save(window.constants.URL_SEND, new FormData(PHOTO_EDIT_FORM), window.utils.onSuccessMessage, window.utils.onErrorMessage);
-      hidePhotoEditForm(window.constants.photoPreviewOverlay);*/
-    } else {
-      /* window.customValidation.HASHTAGS.style = 'border-color: red; background-color: pink';*/
-    }
-
     window.constants.AD_FORM_FIELD_ADDRESS.disabled = false;
     window.backend.save(SAVE_URL, new FormData(window.constants.AD_FORM), onSuccessLoading, window.utils.onErrorMessage);
     window.constants.AD_FORM_FIELD_ADDRESS.disabled = true;
