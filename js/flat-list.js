@@ -33,35 +33,35 @@ window.flatList = (function () {
     AVATAR: CARD_TEMPLATE.querySelector('.popup__avatar'),
     CLOSE: CARD_TEMPLATE.querySelector('.popup__close'),
   };
-  var priceUnitText = 'Р/ночь';
+  var PRICE_UNIT_TEXT = 'Р/ночь';
   var houseTypes = {
     'bungalo': 'Бунгало',
     'flat': 'Квартира',
     'house': 'Дом',
     'palace': 'Дворец',
   };
-  var roomsText = ' комнаты для ';
-  var guestsText = ' гостей';
-  var chekInText = 'Заезд после ';
-  var chekOutText = ', выезд до ';
-  var featureItemClass = 'popup__feature popup__feature--';
-  var photoClass = 'popup__photo';
-  var photoWidth = '45';
-  var photoHeight = '40';
-  var photoAlt = 'Фотография жилья';
+  var ROOMS_TEXT = ' комнаты для ';
+  var GUESTS_TEXT = ' гостей';
+  var CHECK_IN_TEXT = 'Заезд после ';
+  var CHECK_OUT_TEXT = ', выезд до ';
+  var FEATURE_ITEM_CLASS = 'popup__feature popup__feature--';
+  var PHOTO_CLASS = 'popup__photo';
+  var PHOTO_WIDTH = '45';
+  var PHOTO_HEIGHT = '40';
+  var PHOTO_ALT = 'Фотография жилья';
 
-  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var fragment = document.createDocumentFragment();
+  var PIN_TEMPLATE = document.querySelector('#pin').content.querySelector('.map__pin');
+  var FRAGMENT = document.createDocumentFragment();
 
   var generateFlatFeatures = function (list) {
     var featuresList = card.FEATURES.querySelectorAll('li');
     window.utils.removeChildren(card.FEATURES, featuresList);
     for (var i = 0; i < list.length; i++) {
       var featureItem = document.createElement('li');
-      featureItem.className = featureItemClass + list[i];
-      fragment.appendChild(featureItem);
+      featureItem.className = FEATURE_ITEM_CLASS + list[i];
+      FRAGMENT.appendChild(featureItem);
     }
-    card.FEATURES.appendChild(fragment);
+    card.FEATURES.appendChild(FRAGMENT);
   };
 
   var generateFlatPhotos = function (list) {
@@ -69,14 +69,14 @@ window.flatList = (function () {
     window.utils.removeChildren(card.PHOTOS, photosList);
     for (var i = 0; i < list.length; i++) {
       var photoItem = document.createElement('img');
-      photoItem.className = photoClass;
-      photoItem.width = photoWidth;
-      photoItem.height = photoHeight;
+      photoItem.className = PHOTO_CLASS;
+      photoItem.width = PHOTO_WIDTH;
+      photoItem.height = PHOTO_HEIGHT;
       photoItem.src = list[i];
-      photoItem.alt = photoAlt;
-      fragment.appendChild(photoItem);
+      photoItem.alt = PHOTO_ALT;
+      FRAGMENT.appendChild(photoItem);
     }
-    card.PHOTOS.appendChild(fragment);
+    card.PHOTOS.appendChild(FRAGMENT);
   };
 
   var hideCard = function () {
@@ -94,10 +94,10 @@ window.flatList = (function () {
   var generateCard = function (item) {
     card.TITLE.textContent = item.offer.title;
     card.ADDRESS.textContent = item.offer.address;
-    card.PRICE.textContent = '' + item.offer.price + priceUnitText;
+    card.PRICE.textContent = '' + item.offer.price + PRICE_UNIT_TEXT;
     card.TYPE.textContent = houseTypes[item.offer.type];
-    card.ROOM_GUESTS.textContent = item.offer.rooms + roomsText + item.offer.guests + guestsText;
-    card.TIME.textContent = chekInText + item.offer.checkin + chekOutText + item.offer.checkout;
+    card.ROOM_GUESTS.textContent = item.offer.rooms + ROOMS_TEXT + item.offer.guests + GUESTS_TEXT;
+    card.TIME.textContent = CHECK_IN_TEXT + item.offer.checkin + CHECK_OUT_TEXT + item.offer.checkout;
     generateFlatFeatures(item.offer.features);
     card.DESCRIPTION.textContent = item.offer.description;
     generateFlatPhotos(item.offer.photos);
@@ -105,7 +105,7 @@ window.flatList = (function () {
     card.CLOSE.addEventListener('click', hideCard);
     document.addEventListener('keydown', onCardPressEsc);
 
-    MAP_FILTERS.before(fragment.appendChild(CARD_TEMPLATE));
+    MAP_FILTERS.before(FRAGMENT.appendChild(CARD_TEMPLATE));
     window.utils.showElement(CARD_TEMPLATE);
   };
 
@@ -125,9 +125,9 @@ window.flatList = (function () {
     maxPins = response.length < MAX_PINS ? response.length : MAX_PINS;
 
     for (var i = 0; i < maxPins; i++) {
-      fragment.appendChild(generatePin(pinTemplate.cloneNode(true), response[i]));
+      FRAGMENT.appendChild(generatePin(PIN_TEMPLATE.cloneNode(true), response[i]));
     }
-    window.constants.MAP_PINS.appendChild(fragment);
+    window.constants.MAP_PINS.appendChild(FRAGMENT);
   };
 
   var clearPins = function () {
