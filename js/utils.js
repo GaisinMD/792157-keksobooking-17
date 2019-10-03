@@ -72,9 +72,9 @@ window.utils = (function () {
 
     // сообщение об ошибке закрузки
     onErrorMessage: function (code) {
-      var popup = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
-      var inner = popup.querySelector('.error__button');
-      var header = popup.querySelector('.error__message');
+      var POPUP = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+      var INNER = POPUP.querySelector('.error__button');
+      var HEADER = POPUP.querySelector('.error__message');
 
       var hidePopup = function (element) {
         window.constants.MAIN_TAG.removeChild(element);
@@ -83,19 +83,19 @@ window.utils = (function () {
 
       var onEscPress = function (evt) {
         if (evt.keyCode === window.constants.ESC_KEYCODE) {
-          hidePopup(popup);
+          hidePopup(POPUP);
         }
       };
 
-      inner.addEventListener('click', function (evt) {
+      INNER.addEventListener('click', function (evt) {
         evt.preventDefault();
-        hidePopup(popup);
+        hidePopup(POPUP);
       });
 
       document.addEventListener('keydown', onEscPress);
 
-      header.textContent = header.textContent + ': ' + code;
-      window.constants.MAIN_TAG.appendChild(popup);
+      HEADER.textContent = HEADER.textContent + ': ' + code;
+      window.constants.MAIN_TAG.appendChild(POPUP);
     },
 
   };
