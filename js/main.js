@@ -6,8 +6,8 @@
 window.main = (function () {
   var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
 
-  var mainPin = document.querySelector('.map__pin--main');
-  var mapCoordinates = document.querySelector('.map').getBoundingClientRect();
+  var MAIN_PIN = document.querySelector('.map__pin--main');
+  var MAP_COORDINATES = document.querySelector('.map').getBoundingClientRect();
 
   var MIN_X = -33;
   var MIN_Y = 130;
@@ -17,9 +17,9 @@ window.main = (function () {
   var START_X = 570;
   var START_Y = 375;
 
-  var MAIN_PIN_SIZES = {
-    width: 65,
-    height: 70
+  var mainPinSizes = {
+    WIDTH: 65,
+    HEIGHT: 70
   };
 
   var MAP_FILTERS = document.querySelector('.map__filters');
@@ -42,19 +42,19 @@ window.main = (function () {
       window.constants.AD_FORM_FIELDS[i].removeAttribute('disabled');
     }
     MAP_FILTERS.reset();
-    mainPin.removeEventListener('mousedown', activateMain);
+    MAIN_PIN.removeEventListener('mousedown', activateMain);
   };
 
   var setAddress = function () {
-    var mainPinCoordinates = mainPin.getBoundingClientRect();
-    var mainPinCoordinatesX = mainPinCoordinates.x - mapCoordinates.x;
-    var mainPinCoordinatesY = mainPinCoordinates.y - mapCoordinates.y - GAP_Y;
-    window.constants.AD_FORM_FIELD_ADDRESS.value = '' + Math.round(mainPinCoordinatesX + MAIN_PIN_SIZES.width / 2) + ', ' + Math.round(mainPinCoordinatesY + MAIN_PIN_SIZES.height);
+    var mainPinCoordinates = MAIN_PIN.getBoundingClientRect();
+    var mainPinCoordinatesX = mainPinCoordinates.x - MAP_COORDINATES.x;
+    var mainPinCoordinatesY = mainPinCoordinates.y - MAP_COORDINATES.y - GAP_Y;
+    window.constants.AD_FORM_FIELD_ADDRESS.value = '' + Math.round(mainPinCoordinatesX + mainPinSizes.WIDTH / 2) + ', ' + Math.round(mainPinCoordinatesY + mainPinSizes.HEIGHT);
   };
 
   var setPin = function (coordinateX, coordinateY) {
     setAddress();
-    mainPin.style = 'left:' + coordinateX + 'px; top:' + coordinateY + 'px';
+    MAIN_PIN.style = 'left:' + coordinateX + 'px; top:' + coordinateY + 'px';
   };
 
   var getEffectValue = function (coordinateX, coordinateY) {
@@ -67,11 +67,11 @@ window.main = (function () {
 
   var inicializingMain = function () {
     setPin(START_X, START_Y);
-    mainPin.addEventListener('mousedown', activateMain);
+    MAIN_PIN.addEventListener('mousedown', activateMain);
   };
 
   inicializingMain();
-  window.utils.setSlider(mainPin, getEffectValue);
+  window.utils.setSlider(MAIN_PIN, getEffectValue);
 
   return {
     inicializingMain: inicializingMain,
