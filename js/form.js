@@ -20,22 +20,22 @@ window.announcementForm = (function () {
     'palace': 10000,
   };
 
-  var adFormReset = document.querySelector('.ad-form__reset');
+  var AD_FORM_RESET = document.querySelector('.ad-form__reset');
 
-  var timeIn = document.querySelector('#timein');
-  var timeOut = document.querySelector('#timeout');
-  var type = document.querySelector('#type');
-  var price = document.querySelector('#price');
-  var roomNumber = document.querySelector('#room_number');
-  var capacity = document.querySelector('#capacity');
+  var TIME_IN = document.querySelector('#timein');
+  var TIME_OUT = document.querySelector('#timeout');
+  var TYPE = document.querySelector('#type');
+  var PRICE = document.querySelector('#price');
+  var ROOM_NUMBER = document.querySelector('#room_number');
+  var CAPACITY = document.querySelector('#capacity');
 
   var UPLOAD_FILE_AVATAR = document.querySelector('#avatar');
   var DEFAULT_FILE_AVATAR_SOURCE = 'img/muffin-grey.svg';
   var UPLOAD_FILE_AD_FORM = document.querySelector('#images');
-  var avatar = document.querySelector('.ad-form-header__preview').querySelector('img');
-  var adFormImagesContainer = document.querySelector('.ad-form__photo-container');
-  var adFormImageClass = '.ad-form__photo';
-  var imgTemplate = document.querySelector('#ad_photo').content.querySelector('.ad-form__photo');
+  var AVATAR = document.querySelector('.ad-form-header__preview').querySelector('img');
+  var AD_FORM_IMAGE_CONTAINER = document.querySelector('.ad-form__photo-container');
+  var AD_FORM_IMAGE_CLASS = '.ad-form__photo';
+  var IMAGE_TEMPLATE = document.querySelector('#ad_photo').content.querySelector('.ad-form__photo');
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var ERROR_FILE_TYPE_MESSAGE = 'Неверный тип файла';
 
@@ -45,7 +45,7 @@ window.announcementForm = (function () {
 
   var createImagesAdForm = function (img, reader) {
     img.querySelector('img').src = reader.result;
-    adFormImagesContainer.appendChild(img);
+    AD_FORM_IMAGE_CONTAINER.appendChild(img);
   };
 
   var validateLoad = function (target, img) {
@@ -62,7 +62,7 @@ window.announcementForm = (function () {
             createAvatar(img, reader);
           }
           if (target === UPLOAD_FILE_AD_FORM) {
-            createImagesAdForm(imgTemplate.cloneNode(true), reader);
+            createImagesAdForm(IMAGE_TEMPLATE.cloneNode(true), reader);
           }
         });
         reader.readAsDataURL(file);
@@ -74,8 +74,8 @@ window.announcementForm = (function () {
   };
 
   var setMinPrice = function () {
-    price.setAttribute('placeholder', houseTypeMinPrices[type.value]);
-    price.setAttribute('min', houseTypeMinPrices[type.value]);
+    PRICE.setAttribute('placeholder', houseTypeMinPrices[TYPE.value]);
+    PRICE.setAttribute('min', houseTypeMinPrices[TYPE.value]);
   };
 
   var deActivateMain = function () {
@@ -92,8 +92,8 @@ window.announcementForm = (function () {
 
     window.constants.AD_FORM.reset();
     setMinPrice();
-    avatar.src = DEFAULT_FILE_AVATAR_SOURCE;
-    window.utils.removeChildren(adFormImagesContainer, adFormImagesContainer.querySelectorAll(adFormImageClass));
+    AVATAR.src = DEFAULT_FILE_AVATAR_SOURCE;
+    window.utils.removeChildren(AD_FORM_IMAGE_CONTAINER, AD_FORM_IMAGE_CONTAINER.querySelectorAll(AD_FORM_IMAGE_CLASS));
     window.main.inicializingMain();
     window.flatList.clearPins();
     window.flatList.hideCard();
@@ -127,15 +127,15 @@ window.announcementForm = (function () {
 
   var setCapacity = function (number) {
     var capacityRooms = RoomCapacity[number];
-    capacity[0].selected = false;
+    CAPACITY[0].selected = false;
 
-    for (var i = 0; i < capacity.options.length; i++) {
-      if (!capacityRooms.includes(capacity.options[i].value)) {
-        capacity.options[i].disabled = true;
-        capacity.options[i].selected = false;
+    for (var i = 0; i < CAPACITY.options.length; i++) {
+      if (!capacityRooms.includes(CAPACITY.options[i].value)) {
+        CAPACITY.options[i].disabled = true;
+        CAPACITY.options[i].selected = false;
       } else {
-        capacity.options[i].disabled = false;
-        capacity.options[i].selected = true;
+        CAPACITY.options[i].disabled = false;
+        CAPACITY.options[i].selected = true;
       }
     }
   };
@@ -158,25 +158,25 @@ window.announcementForm = (function () {
 
 
   UPLOAD_FILE_AVATAR.addEventListener('change', function (evt) {
-    validateLoad(evt.target, avatar);
+    validateLoad(evt.target, AVATAR);
   });
 
   UPLOAD_FILE_AD_FORM.addEventListener('change', function (evt) {
-    validateLoad(evt.target, avatar);
+    validateLoad(evt.target, AVATAR);
   });
 
-  type.addEventListener('change', setMinPrice);
-  timeIn.addEventListener('change', function () {
-    timeOut.value = timeIn.value;
+  TYPE.addEventListener('change', setMinPrice);
+  TIME_IN.addEventListener('change', function () {
+    TIME_OUT.value = TIME_IN.value;
   });
-  timeOut.addEventListener('change', function () {
-    timeIn.value = timeOut.value;
+  TIME_OUT.addEventListener('change', function () {
+    TIME_IN.value = TIME_OUT.value;
   });
-  roomNumber.addEventListener('change', function () {
-    setCapacity(roomNumber.value);
+  ROOM_NUMBER.addEventListener('change', function () {
+    setCapacity(ROOM_NUMBER.value);
   });
 
   window.constants.AD_FORM.addEventListener('submit', submitForm);
-  adFormReset.addEventListener('click', deActivateMain);
+  AD_FORM_RESET.addEventListener('click', deActivateMain);
 
 })();
